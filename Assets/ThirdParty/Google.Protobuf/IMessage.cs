@@ -30,6 +30,8 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endregion
 
+using System;
+using Google.Protobuf.Reflection;
 
 namespace Google.Protobuf
 {
@@ -59,6 +61,27 @@ namespace Google.Protobuf
         /// to a coded output stream.</returns>
         int CalculateSize();
 
+        /// <summary>
+        /// Descriptor for this message. All instances are expected to return the same descriptor,
+        /// and for generated types this will be an explicitly-implemented member, returning the
+        /// same value as the static property declared on the type.
+        /// </summary>
+        MessageDescriptor Descriptor { get; }
     }
 
+    /// <summary>
+    /// Generic interface for a Protocol Buffers message,
+    /// where the type parameter is expected to be the same type as
+    /// the implementation class.
+    /// </summary>
+    /// <typeparam name="T">The message type.</typeparam>
+    public interface IMessage<T> : IMessage, IEquatable<T>, IDeepCloneable<T> where T : IMessage<T>
+    {
+        /// <summary>
+        /// Merges the given message into this one.
+        /// </summary>
+        /// <remarks>See the user guide for precise merge semantics.</remarks>
+        /// <param name="message">The message to merge with this one. Must not be null.</param>
+        void MergeFrom(T message);
+    }
 }

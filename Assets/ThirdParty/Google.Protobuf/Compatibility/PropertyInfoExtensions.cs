@@ -1,4 +1,4 @@
-﻿#region Copyright notice and license
+#region Copyright notice and license
 // Protocol Buffers - Google's data interchange format
 // Copyright 2015 Google Inc.  All rights reserved.
 // https://developers.google.com/protocol-buffers/
@@ -47,7 +47,11 @@ namespace Google.Protobuf.Compatibility
         /// </summary>
         internal static MethodInfo GetGetMethod(this PropertyInfo target)
         {
+#if NET35
             var method = target.GetGetMethod();
+#else
+            var method = target.GetMethod;
+#endif
             return method != null && method.IsPublic ? method : null;
         }
 
@@ -57,7 +61,11 @@ namespace Google.Protobuf.Compatibility
         /// </summary>
         internal static MethodInfo GetSetMethod(this PropertyInfo target)
         {
+#if NET35
             var method = target.GetSetMethod();
+#else
+            var method = target.SetMethod;
+#endif
             return method != null && method.IsPublic ? method : null;
         }
     }

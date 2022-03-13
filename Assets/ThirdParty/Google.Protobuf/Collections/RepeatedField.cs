@@ -1,4 +1,4 @@
-﻿#region Copyright notice and license
+#region Copyright notice and license
 // Protocol Buffers - Google's data interchange format
 // Copyright 2015 Google Inc.  All rights reserved.
 // https://developers.google.com/protocol-buffers/
@@ -34,6 +34,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Security;
+using System.Threading;
 
 namespace Google.Protobuf.Collections
 {
@@ -46,13 +48,47 @@ namespace Google.Protobuf.Collections
     /// supported by Protocol Buffers but nor does it guarantee that all operations will work in such cases.
     /// </remarks>
     /// <typeparam name="T">The element type of the repeated field.</typeparam>
-    public sealed class RepeatedField<T> : IList<T>, IList 
+    public sealed class RepeatedField<T> : IList<T>, IList, IDeepCloneable<RepeatedField<T>>, IEquatable<RepeatedField<T>>
+#if !NET35
+        , IReadOnlyList<T>
+#endif
     {
+        private static readonly EqualityComparer<T> EqualityComparer = ProtobufEqualityComparers.GetEqualityComparer<T>();
         private static readonly T[] EmptyArray = new T[0];
         private const int MinArraySize = 8;
 
         private T[] array = EmptyArray;
         private int count = 0;
+
+        /// <summary>
+        /// Creates a deep clone of this repeated field.
+        /// </summary>
+        /// <remarks>
+        /// If the field type is
+        /// a message type, each element is also cloned; otherwise, it is
+        /// assumed that the field type is primitive (including string and
+        /// bytes, both of which are immutable) and so a simple copy is
+        /// equivalent to a deep clone.
+        /// </remarks>
+        /// <returns>A deep clone of this repeated field.</returns>
+        public RepeatedField<T> Clone()
+        {
+            RepeatedField<T> clone = new RepeatedField<T>();
+            if (array != EmptyArray)
+            {
+                clone.array = (T[])array.Clone();
+                IDeepCloneable<T>[] cloneableArray = clone.array as IDeepCloneable<T>[];
+                if (cloneableArray != null)
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        clone.array[i] = cloneableArray[i].Clone();
+                    }
+                }
+            }
+            clone.count = count;
+            return clone;
+        }
 
         /// <summary>
         /// Adds the entries from the given input stream, decoding them with the specified codec.
@@ -61,22 +97,63 @@ namespace Google.Protobuf.Collections
         /// <param name="codec">The codec to use in order to read each entry.</param>
         public void AddEntriesFrom(CodedInputStream input, FieldCodec<T> codec)
         {
+            ParseContext.Initialize(input, out ParseContext ctx);
+            try
+            {
+                AddEntriesFrom(ref ctx, codec);
+            }
+            finally
+            {
+                ctx.CopyStateTo(input);
+            }
+        }
+
+        /// <summary>
+        /// Adds the entries from the given parse context, decoding them with the specified codec.
+        /// </summary>
+        /// <param name="ctx">The input to read from.</param>
+        /// <param name="codec">The codec to use in order to read each entry.</param>
+        [SecuritySafeCritical]
+        public void AddEntriesFrom(ref ParseContext ctx, FieldCodec<T> codec)
+        {
             // TODO: Inline some of the Add code, so we can avoid checking the size on every
             // iteration.
-            uint tag = input.LastTag;
+            uint tag = ctx.state.lastTag;
             var reader = codec.ValueReader;
             // Non-nullable value types can be packed or not.
             if (FieldCodec<T>.IsPackedRepeatedField(tag))
             {
-                int length = input.ReadLength();
+                int length = ctx.ReadLength();
                 if (length > 0)
                 {
-                    int oldLimit = input.PushLimit(length);
-                    while (!input.ReachedLimit)
+                    int oldLimit = SegmentedBufferHelper.PushLimit(ref ctx.state, length);
+
+                    // If the content is fixed size then we can calculate the length
+                    // of the repeated field and pre-initialize the underlying collection.
+                    //
+                    // Check that the supplied length doesn't exceed the underlying buffer.
+                    // That prevents a malicious length from initializing a very large collection.
+                    if (codec.FixedSize > 0 && length % codec.FixedSize == 0 && ParsingPrimitives.IsDataAvailable(ref ctx.state, length))
                     {
-                        Add(reader(input));
+                        EnsureSize(count + (length / codec.FixedSize));
+
+                        while (!SegmentedBufferHelper.IsReachedLimit(ref ctx.state))
+                        {
+                            // Only FieldCodecs with a fixed size can reach here, and they are all known
+                            // types that don't allow the user to specify a custom reader action.
+                            // reader action will never return null.
+                            array[count++] = reader(ref ctx);
+                        }
                     }
-                    input.PopLimit(oldLimit);
+                    else
+                    {
+                        // Content is variable size so add until we reach the limit.
+                        while (!SegmentedBufferHelper.IsReachedLimit(ref ctx.state))
+                        {
+                            Add(reader(ref ctx));
+                        }
+                    }
+                    SegmentedBufferHelper.PopLimit(ref ctx.state, oldLimit);
                 }
                 // Empty packed field. Odd, but valid - just ignore.
             }
@@ -85,8 +162,8 @@ namespace Google.Protobuf.Collections
                 // Not packed... (possibly not packable)
                 do
                 {
-                    Add(reader(input));
-                } while (input.MaybeConsumeTag(tag));
+                    Add(reader(ref ctx));
+                } while (ParsingPrimitives.MaybeConsumeTag(ref ctx.buffer, ref ctx.state, tag));
             }
         }
 
@@ -94,7 +171,7 @@ namespace Google.Protobuf.Collections
         /// Calculates the size of this collection based on the given codec.
         /// </summary>
         /// <param name="codec">The codec to use when encoding each field.</param>
-        /// <returns>The number of bytes that would be written to a <see cref="CodedOutputStream"/> by <see cref="WriteTo"/>,
+        /// <returns>The number of bytes that would be written to an output by one of the <c>WriteTo</c> methods,
         /// using the same codec.</returns>
         public int CalculateSize(FieldCodec<T> codec)
         {
@@ -114,6 +191,10 @@ namespace Google.Protobuf.Collections
             {
                 var sizeCalculator = codec.ValueSizeCalculator;
                 int size = count * CodedOutputStream.ComputeRawVarint32Size(tag);
+                if (codec.EndTag != 0)
+                {
+                    size += count * CodedOutputStream.ComputeRawVarint32Size(codec.EndTag);
+                }
                 for (int i = 0; i < count; i++)
                 {
                     size += sizeCalculator(array[i]);
@@ -149,6 +230,26 @@ namespace Google.Protobuf.Collections
         /// <param name="codec">The codec to use when encoding each value.</param>
         public void WriteTo(CodedOutputStream output, FieldCodec<T> codec)
         {
+            WriteContext.Initialize(output, out WriteContext ctx);
+            try
+            {
+                WriteTo(ref ctx, codec);
+            }
+            finally
+            {
+                ctx.CopyStateTo(output);
+            }
+        }
+
+        /// <summary>
+        /// Writes the contents of this collection to the given write context,
+        /// encoding each value using the specified codec.
+        /// </summary>
+        /// <param name="ctx">The write context to write to.</param>
+        /// <param name="codec">The codec to use when encoding each value.</param>
+        [SecuritySafeCritical]
+        public void WriteTo(ref WriteContext ctx, FieldCodec<T> codec)
+        {
             if (count == 0)
             {
                 return;
@@ -158,12 +259,12 @@ namespace Google.Protobuf.Collections
             if (codec.PackedRepeatedField)
             {
                 // Packed primitive type
-                uint size = (uint)CalculatePackedDataSize(codec);
-                output.WriteTag(tag);
-                output.WriteRawVarint32(size);
+                int size = CalculatePackedDataSize(codec);
+                ctx.WriteTag(tag);
+                ctx.WriteLength(size);
                 for (int i = 0; i < count; i++)
                 {
-                    writer(output, array[i]);
+                    writer(ref ctx, array[i]);
                 }
             }
             else
@@ -172,20 +273,56 @@ namespace Google.Protobuf.Collections
                 // Can't use codec.WriteTagAndValue, as that omits default values.
                 for (int i = 0; i < count; i++)
                 {
-                    output.WriteTag(tag);
-                    writer(output, array[i]);
+                    ctx.WriteTag(tag);
+                    writer(ref ctx, array[i]);
+                    if (codec.EndTag != 0)
+                    {
+                        ctx.WriteTag(codec.EndTag);
+                    }
                 }
             }
         }
 
+        /// <summary>
+        /// Gets and sets the capacity of the RepeatedField's internal array.  WHen set, the internal array is reallocated to the given capacity.
+        /// <exception cref="ArgumentOutOfRangeException">The new value is less than Count -or- when Count is less than 0.</exception>
+        /// </summary>
+        public int Capacity
+        {
+            get { return array.Length; }
+            set
+            {
+                if (value < count)
+                {
+                    throw new ArgumentOutOfRangeException("Capacity", value,
+                        $"Cannot set Capacity to a value smaller than the current item count, {count}");
+                }
+
+                if (value >= 0 && value != array.Length)
+                {
+                    SetSize(value);
+                }
+            }
+        }
+
+        // May increase the size of the internal array, but will never shrink it.
         private void EnsureSize(int size)
         {
             if (array.Length < size)
             {
                 size = Math.Max(size, MinArraySize);
                 int newSize = Math.Max(array.Length * 2, size);
-                var tmp = new T[newSize];
-                Array.Copy(array, 0, tmp, 0, array.Length);
+                SetSize(newSize);
+            }
+        }
+
+        // Sets the internal array to an exact size.
+        private void SetSize(int size)
+        {
+            if (size != array.Length)
+            {
+                var tmp = new T[size];
+                Array.Copy(array, 0, tmp, 0, count);
                 array = tmp;
             }
         }
@@ -196,7 +333,7 @@ namespace Google.Protobuf.Collections
         /// <param name="item">The item to add.</param>
         public void Add(T item)
         {
-            ProtoPreconditions.CheckNotNullUnconstrained(item, "item");
+            ProtoPreconditions.CheckNotNullUnconstrained(item, nameof(item));
             EnsureSize(count + 1);
             array[count++] = item;
         }
@@ -241,7 +378,7 @@ namespace Google.Protobuf.Collections
             if (index == -1)
             {
                 return false;
-            }
+            }            
             Array.Copy(array, index + 1, array, index, count - index - 1);
             count--;
             array[count] = default(T);
@@ -251,24 +388,12 @@ namespace Google.Protobuf.Collections
         /// <summary>
         /// Gets the number of elements contained in the collection.
         /// </summary>
-        public int Count
-        {
-            get
-            {
-                return count;
-            }
-        }
+        public int Count => count;
 
         /// <summary>
         /// Gets a value indicating whether the collection is read-only.
         /// </summary>
-        public bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsReadOnly => false;
 
         /// <summary>
         /// Adds all of the specified values into this collection.
@@ -276,7 +401,7 @@ namespace Google.Protobuf.Collections
         /// <param name="values">The values to add to this collection.</param>
         public void AddRange(IEnumerable<T> values)
         {
-            ProtoPreconditions.CheckNotNull(values, "values");
+            ProtoPreconditions.CheckNotNull(values, nameof(values));
 
             // Optimization 1: If the collection we're adding is already a RepeatedField<T>,
             // we know the values are valid.
@@ -309,7 +434,7 @@ namespace Google.Protobuf.Collections
                     {
                         if (item == null)
                         {
-                            throw new ArgumentException("Sequence contained null element", "values");
+                            throw new ArgumentException("Sequence contained null element", nameof(values));
                         }
                     }
                 }
@@ -413,7 +538,7 @@ namespace Google.Protobuf.Collections
             {
                 return false;
             }
-            EqualityComparer<T> comparer = EqualityComparer<T>.Default;
+            EqualityComparer<T> comparer = EqualityComparer;
             for (int i = 0; i < count; i++)
             {
                 if (!comparer.Equals(array[i], other.array[i]))
@@ -432,8 +557,8 @@ namespace Google.Protobuf.Collections
         /// <returns>The zero-based index of the item, or -1 if it is not found.</returns>
         public int IndexOf(T item)
         {
-            ProtoPreconditions.CheckNotNullUnconstrained(item, "item");
-            EqualityComparer<T> comparer = EqualityComparer<T>.Default;
+            ProtoPreconditions.CheckNotNullUnconstrained(item, nameof(item));
+            EqualityComparer<T> comparer = EqualityComparer;
             for (int i = 0; i < count; i++)
             {
                 if (comparer.Equals(array[i], item))
@@ -451,10 +576,10 @@ namespace Google.Protobuf.Collections
         /// <param name="item">The item to insert.</param>
         public void Insert(int index, T item)
         {
-            ProtoPreconditions.CheckNotNullUnconstrained(item, "item");
+            ProtoPreconditions.CheckNotNullUnconstrained(item, nameof(item));
             if (index < 0 || index > count)
             {
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
             EnsureSize(count + 1);
             Array.Copy(array, index, array, index + 1, count - index);
@@ -470,11 +595,22 @@ namespace Google.Protobuf.Collections
         {
             if (index < 0 || index >= count)
             {
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
             Array.Copy(array, index + 1, array, index, count - index - 1);
             count--;
             array[count] = default(T);
+        }
+
+        /// <summary>
+        /// Returns a string representation of this repeated field, in the same
+        /// way as it would be represented by the default JSON formatter.
+        /// </summary>
+        public override string ToString()
+        {
+            var writer = new StringWriter();
+            JsonFormatter.Default.WriteList(writer, this);
+            return writer.ToString();
         }
 
         /// <summary>
@@ -491,7 +627,7 @@ namespace Google.Protobuf.Collections
             {
                 if (index < 0 || index >= count)
                 {
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
                 }
                 return array[index];
             }
@@ -499,42 +635,24 @@ namespace Google.Protobuf.Collections
             {
                 if (index < 0 || index >= count)
                 {
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
                 }
-                ProtoPreconditions.CheckNotNullUnconstrained(value, "value");
+                ProtoPreconditions.CheckNotNullUnconstrained(value, nameof(value));
                 array[index] = value;
             }
         }
 
         #region Explicit interface implementation for IList and ICollection.
-        bool IList.IsFixedSize
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool IList.IsFixedSize => false;
 
         void ICollection.CopyTo(Array array, int index)
         {
             Array.Copy(this.array, 0, array, index, count);
         }
 
-        bool ICollection.IsSynchronized
-        {
-            get
-            {
-                return false;
-            }
-        }
+        bool ICollection.IsSynchronized => false;
 
-        object ICollection.SyncRoot
-        {
-            get
-            {
-                return this;
-            }
-        }
+        object ICollection.SyncRoot => this;
 
         object IList.this[int index]
         {
@@ -544,7 +662,7 @@ namespace Google.Protobuf.Collections
 
         int IList.Add(object value)
         {
-            Add((T)value);
+            Add((T) value);
             return count - 1;
         }
 
@@ -564,7 +682,7 @@ namespace Google.Protobuf.Collections
 
         void IList.Insert(int index, object value)
         {
-            Insert(index, (T)value);
+            Insert(index, (T) value);
         }
 
         void IList.Remove(object value)
