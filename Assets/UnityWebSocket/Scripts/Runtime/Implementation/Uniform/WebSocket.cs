@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace UnityWebSocket.Uniform
 {
@@ -59,9 +60,9 @@ namespace UnityWebSocket.Uniform
             _rawSocket.SendAsync(data);
         }
 
-        public void ConnectAsync()
+        public void ConnectAsync(IDictionary<string, string> headers)
         {
-            _rawSocket.ConnectAsync();
+            _rawSocket.ConnectAsync(headers);
         }
 
         public void CloseAsync()

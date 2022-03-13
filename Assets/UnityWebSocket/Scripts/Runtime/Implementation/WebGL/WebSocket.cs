@@ -1,5 +1,6 @@
 #if UNITY_EDITOR || UNITY_WEBGL
 using System;
+using System.Collections.Generic;
 
 namespace UnityWebSocket.WebGL
 {
@@ -56,7 +57,7 @@ namespace UnityWebSocket.WebGL
                 OnError.Invoke(this, new ErrorEventArgs(msg));
         }
 
-        public void ConnectAsync()
+        public void ConnectAsync(IDictionary<string, string> headers = null)
         {
             int ret = WebSocketManager.WebSocketConnect(instanceID);
             if (ret < 0)

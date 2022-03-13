@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace UnityWebSocket
 {
@@ -44,7 +45,7 @@ namespace UnityWebSocket
         ///   A series of reconnecting has failed.
         ///   </para>
         /// </exception>
-        void ConnectAsync();
+        void ConnectAsync(IDictionary<string, string> headers = null);
 
         /// <summary>
         /// Closes the connection asynchronously.

@@ -48,9 +48,9 @@ namespace UnityWebSocket
             _socket.SendAsync(data);
         }
 
-        public void ConnectAsync()
+        public void ConnectAsync(IDictionary<string, string> headers)
         {
-            _socket.ConnectAsync();
+            _socket.ConnectAsync(headers);
         }
 
         public void CloseAsync()

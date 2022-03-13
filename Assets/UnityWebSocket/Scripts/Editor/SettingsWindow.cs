@@ -10,7 +10,7 @@ namespace UnityWebSocket.Editor
     {
         internal static readonly int[] ASM_MEMORY_SIZE = new int[] { 256, 512, 1024 };
         internal static readonly int[] LINKER_TARGET = new int[] { 0, 2 };
-        static SettingsWindow window = null;
+        //static SettingsWindow window = null;
 
         private void OnGUI()
         {
@@ -140,7 +140,7 @@ namespace UnityWebSocket.Editor
         }
 
         UnityWebRequest req;
-        string changeLog = "";
+        //string changeLog = "";
 
         internal static class PlayerSettingsChecker
         {

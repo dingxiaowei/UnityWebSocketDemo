@@ -58,7 +58,7 @@ namespace UnityWebSocket.NoWebGL.Default
             this.Address = address;
         }
 
-        public void ConnectAsync()
+        public void ConnectAsync(IDictionary<string, string> headers)
         {
             if (cts != null || socket != null)
             {
@@ -67,6 +67,13 @@ namespace UnityWebSocket.NoWebGL.Default
             }
             cts = new CancellationTokenSource();
             socket = new ClientWebSocket();   //TODO:设置Options.SetRequestHeader 设置Headers  还有设置Options.KeepAliveInterval
+            if (headers != null)
+            {
+                foreach (var pair in headers)
+                {
+                    socket.Options.SetRequestHeader(pair.Key, pair.Value);
+                }
+            }
             RunConnectAsync();
         }
 
