@@ -54,4 +54,5 @@
 ### 对接测试
 wsurl   ws://cyberverse.hwcloudtest.cn:9995/bff/hola/room/123
 要设置Header User,"dxw"
+发送1020 返回1025 1030
 
