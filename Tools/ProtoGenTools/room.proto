@@ -246,13 +246,6 @@ message RoomMoveData{
   int32 state=5;
 }
 
-message NetMessage {
-  int32 	Type		= 1;
-  bytes 	Content = 2;
-  string 	Oid 		= 3;
-  string	Xid 		=4;
-}
-
 message RegServerRequest{
   string serverId=2;
   string serviceType=3;

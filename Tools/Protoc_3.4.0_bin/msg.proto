@@ -1,5 +1,5 @@
 syntax="proto3";
-package protoc;
+package Msg;
 
 message NetMessage{
   int32 type=1;
