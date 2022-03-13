@@ -66,7 +66,7 @@ namespace UnityWebSocket.NoWebGL.Default
                 return;
             }
             cts = new CancellationTokenSource();
-            socket = new ClientWebSocket();
+            socket = new ClientWebSocket();   //TODO:设置Options.SetRequestHeader 设置Headers  还有设置Options.KeepAliveInterval
             RunConnectAsync();
         }
 

@@ -1,6 +1,5 @@
 ﻿using Google.Protobuf;
 using ProtoBuff;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -29,6 +28,9 @@ public class ProtoTest : MonoBehaviour
         phoneNumList.Add(phoneNumber2);
         person.Phone.AddRange(phoneNumList);
 
+        var desPerson1 = Person.Parser.ParseFrom(person.ToByteArray());
+        DebugPerson(desPerson1);
+
         //序列化
         using (MemoryStream personMs = new MemoryStream())
         {
@@ -36,17 +38,22 @@ public class ProtoTest : MonoBehaviour
             Debug.Log("bytes length:" + personMs.Length.ToString());
             //获取ByteString
             //var byteStr = ByteString.CopyFrom(personMs.ToArray());
-            
+
             //反序列化
             personMs.Position = 0;
             Person desPerson = Person.Parser.ParseFrom(personMs);
-            Debug.Log(string.Format("ID:{0} Name:{1} Email:{2} Address:{3}", desPerson.Id, desPerson.Name, desPerson.Email, System.Text.Encoding.UTF8.GetString(desPerson.Address.ToByteArray())));
-            for (int i = 0; i < person.Phone.Count; i++)
-            {
-                Debug.Log(string.Format("PhoneNum:{0} Type:{1}", person.Phone[i].Number, person.Phone[i].Type));
-            }
+            DebugPerson(desPerson);
             Debug.Log("测试OK");
         }
         #endregion
+    }
+
+    void DebugPerson(Person desPerson)
+    {
+        Debug.Log(string.Format("ID:{0} Name:{1} Email:{2} Address:{3}", desPerson.Id, desPerson.Name, desPerson.Email, System.Text.Encoding.UTF8.GetString(desPerson.Address.ToByteArray())));
+        for (int i = 0; i < desPerson.Phone.Count; i++)
+        {
+            Debug.Log(string.Format("PhoneNum:{0} Type:{1}", desPerson.Phone[i].Number, desPerson.Phone[i].Type));
+        }
     }
 }
