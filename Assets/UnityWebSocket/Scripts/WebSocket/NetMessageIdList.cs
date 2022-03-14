@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Protoc
 {
-    public sealed partial class Person : INetMessage { }
+    //public sealed partial class Person : INetMessage { }
 }
 
 public class NetMessageIdList : Singleton<NetMessageIdList>

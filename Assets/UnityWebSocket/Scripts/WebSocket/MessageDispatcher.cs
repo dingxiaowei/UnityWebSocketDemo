@@ -2,6 +2,8 @@
 using Protoc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 public class MessageDispatcher : Singleton<MessageDispatcher>
 {
@@ -9,6 +11,37 @@ public class MessageDispatcher : Singleton<MessageDispatcher>
     protected Dictionary<int, Action<object>> mMessageHandlers = new Dictionary<int, Action<object>>();
     protected Queue<NetMessage> mMessageFrontQueue = new Queue<NetMessage>();
     protected Queue<NetMessage> mMessageBackQueue = new Queue<NetMessage>();
+    protected Type mResponseAttrType = typeof(ResponseAttribute);
+
+    public void AutoRegiste()
+    {
+        //var types = Assembly.GetExecutingAssembly().GetTypes();
+        //foreach (var t in types)
+        //{
+        //    if (t.IsAbstract || t.IsInterface)
+        //        continue;
+        //    var methods = t.GetMethods();
+        //    foreach (var method in methods)
+        //    {
+        //        if (method.IsAbstract || method.IsVirtual)
+        //            continue;
+        //        var attrs = method.GetCustomAttributes(mResponseAttrType);
+        //        if (attrs != null)
+        //        {
+        //            foreach (var attr in attrs)
+        //            {
+        //                var msgId = (attr as ResponseAttribute).MsgId;
+        //                RegisterHandler(msgId, method.);
+        //            }
+        //        }
+        //    }
+        //}
+    }
+
+    public void AutoUnRegiste()
+    {
+
+    }
 
     public void RegisterOnMessageReceived<T>(Action<object> handler) where T : IMessage
     {
