@@ -74,6 +74,8 @@ namespace UnityWebSocket.NoWebGL.Default
                     socket.Options.SetRequestHeader(pair.Key, pair.Value);
                 }
             }
+            
+            //socket.Options.KeepAliveInterval = TimeSpan.FromSeconds(20);
             RunConnectAsync();
         }
 
