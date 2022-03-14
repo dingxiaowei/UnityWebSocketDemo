@@ -7,7 +7,7 @@ using UnityEngine;
 public class WSSocketSession
 {
     protected WSSocketConnection mConnection;
-    protected MessageDispatcher mDispatcher = new MessageDispatcher();
+    protected readonly MessageDispatcher mDispatcher = MessageDispatcher.sInstance;
 
     public bool IsConnected { get { return mConnection.IsConnect; } }
 
