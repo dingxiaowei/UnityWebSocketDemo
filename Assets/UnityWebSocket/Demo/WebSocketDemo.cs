@@ -6,7 +6,7 @@ using UnityEngine;
 public enum MsgType : int
 {
     EPersonMsg = 1,
-
+    EPersonMsg2 = 2
 }
 
 public class WebSocketDemo : MonoBehaviour
@@ -52,7 +52,7 @@ public class WebSocketDemo : MonoBehaviour
     }
 
     //必须是public的  否则无法被搜集
-    [Response((int)MsgType.EPersonMsg)]
+    [Response((int)MsgType.EPersonMsg, (int)MsgType.EPersonMsg2)]
     public void OnReceivedPersonMsg(object msg)
     {
         if (msg == null)
@@ -61,8 +61,10 @@ public class WebSocketDemo : MonoBehaviour
             return;
         }
         var person = Person.Parser.ParseFrom(msg as ByteString);
+#if DEBUG_NETWORK
         Debug.Log("----打印消息分发的角色------");
         DebugPerson(person);
+#endif
     }
 
     //测试用
@@ -90,6 +92,11 @@ public class WebSocketDemo : MonoBehaviour
         if (GUI.Button(new Rect(10, 110, 100, 40), "发送消息"))
         {
             socketSession.Send<Person>(person);
+        }
+        if (GUI.Button(new Rect(10, 160, 100, 40), "收发多个消息"))
+        {
+            socketSession.Send((int)MsgType.EPersonMsg, person);
+            socketSession.Send((int)MsgType.EPersonMsg2, person);
         }
     }
 
