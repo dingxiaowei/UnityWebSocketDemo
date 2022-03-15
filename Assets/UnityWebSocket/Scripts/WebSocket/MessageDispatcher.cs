@@ -42,13 +42,16 @@ public class MessageDispatcher : Singleton<MessageDispatcher>
     {
         foreach (var method in ResponseAttribute.GetResponseMethod(Reflection.GetExecutingAssembly()))
         {
-            var msgId = ResponseAttribute.GetMsgId(method);
-            if (msgId > 0)
+            var msgIds = ResponseAttribute.GetMsgIds(method);
+            if (msgIds != null)
             {
-                RegisterMethod(msgId, method);
+                for (int i = 0; i < msgIds.Length; i++)
+                {
+                    RegisterMethod(msgIds[i], method);
 #if DEBUG_NETWORK
-                UnityEngine.Debug.Log($"注册消息:{msgId}  函数名:{method.Name}");
+                    UnityEngine.Debug.Log($"注册消息:{msgIds[i]}  函数名:{method.Name}");
 #endif
+                }
             }
         }
     }

@@ -3,6 +3,12 @@ using Protoc;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum MsgType
+{
+    EPersonMsg = 1,
+    
+}
+
 public class WebSocketDemo : MonoBehaviour
 {
     public string address = "ws://127.0.0.1:5963";
@@ -42,11 +48,11 @@ public class WebSocketDemo : MonoBehaviour
             Debug.Log($"websocket {res}");
         });
 
-        MessageDispatcher.sInstance.RegisterOnMessageReceived<Person>(OnReceivedPersonMsg);
+        //MessageDispatcher.sInstance.RegisterOnMessageReceived<Person>(OnReceivedPersonMsg);
     }
 
     //必须是public的  否则无法被搜集
-    [Response(1)]
+    [Response((int)MsgType.EPersonMsg)]
     public void OnReceivedPersonMsg(object msg)
     {
         if (msg == null)
@@ -76,9 +82,9 @@ public class WebSocketDemo : MonoBehaviour
         {
             socketSession?.Connect();
         }
-        if (GUI.Button(new Rect(10, 60, 100, 40), "连发10条消息"))
+        if (GUI.Button(new Rect(10, 60, 100, 40), "连发50条消息"))
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 50; i++)
                 socketSession.Send(1, person);
         }
         if (GUI.Button(new Rect(10, 110, 100, 40), "发送消息"))

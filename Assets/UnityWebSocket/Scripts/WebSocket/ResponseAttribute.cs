@@ -5,8 +5,8 @@ using System.Reflection;
 
 public class ResponseAttribute : Attribute
 {
-    public int MsgId { get; private set; }
-    public ResponseAttribute(int id)
+    protected int[] MsgId { get; private set; }
+    public ResponseAttribute(params int[] id)
     {
         this.MsgId = id;
     }
@@ -30,15 +30,15 @@ public class ResponseAttribute : Attribute
         return Attribute.IsDefined(method, typeof(ResponseAttribute));
     }
 
-    public static int GetMsgId(MethodInfo method)
+    public static int[] GetMsgIds(MethodInfo method)
     {
         var attr = method.GetCustomAttribute(typeof(ResponseAttribute));
         if (attr != null)
         {
-            var msgId = (attr as ResponseAttribute).MsgId;
-            return msgId;
+            var msgIds = (attr as ResponseAttribute).MsgId;
+            return msgIds;
         }
-        return -1;
+        return null;
     }
 
     public static IEnumerable<MethodInfo> GetResponseMethod(Assembly assembly)
