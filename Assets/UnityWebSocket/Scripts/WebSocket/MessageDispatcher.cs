@@ -2,45 +2,60 @@
 using Protoc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 
 public class MessageDispatcher : Singleton<MessageDispatcher>
 {
     protected const int MAX_DISPATCH_MESSAGE_COUNT_PER_FRAME = 16;
     protected Dictionary<int, Action<object>> mMessageHandlers = new Dictionary<int, Action<object>>();
+    protected Dictionary<int, List<MethodInfo>> mMessageMethods = new Dictionary<int, List<MethodInfo>>();
     protected Queue<NetMessage> mMessageFrontQueue = new Queue<NetMessage>();
     protected Queue<NetMessage> mMessageBackQueue = new Queue<NetMessage>();
     protected Type mResponseAttrType = typeof(ResponseAttribute);
 
-    public void AutoRegiste()
-    {
-        //var types = Assembly.GetExecutingAssembly().GetTypes();
-        //foreach (var t in types)
-        //{
-        //    if (t.IsAbstract || t.IsInterface)
-        //        continue;
-        //    var methods = t.GetMethods();
-        //    foreach (var method in methods)
-        //    {
-        //        if (method.IsAbstract || method.IsVirtual)
-        //            continue;
-        //        var attrs = method.GetCustomAttributes(mResponseAttrType);
-        //        if (attrs != null)
-        //        {
-        //            foreach (var attr in attrs)
-        //            {
-        //                var msgId = (attr as ResponseAttribute).MsgId;
-        //                RegisterHandler(msgId, method.);
-        //            }
-        //        }
-        //    }
-        //}
-    }
+    //public void AutoRegiste()
+    //{
+    //    var types = Assembly.GetExecutingAssembly().GetTypes();
+    //    foreach (var t in types)
+    //    {
+    //        if (t.IsAbstract || t.IsInterface)
+    //            continue;
+    //        var methods = t.GetMethods();
+    //        foreach (var method in methods)
+    //        {
+    //            UnityEngine.Debug.Log("----methodname:" + method.Name);
+    //            if (method.IsAbstract || method.IsVirtual)
+    //                continue;
+    //            var attr = method.GetCustomAttribute(mResponseAttrType);
+    //            if (attr != null)
+    //            {
+    //                var msgId = (attr as ResponseAttribute).MsgId;
+    //                //RegisterHandler(msgId, method.CreateDelegate(typeof(Action<object>));
+    //                UnityEngine.Debug.LogError(method);
+    //                UnityEngine.Debug.LogError(attr);
+    //            }
+    //        }
+    //    }
+    //}
 
-    public void AutoUnRegiste()
-    {
+    //public void AutoUnRegiste()
+    //{
 
+    //}
+
+    public void ResponseRegister()
+    {
+        foreach (var method in ResponseAttribute.GetResponseMethod(Reflection.GetExecutingAssembly()))
+        {
+            var msgId = ResponseAttribute.GetMsgId(method);
+            if (msgId > 0)
+            {
+                RegisterMethod(msgId, method);
+#if DEBUG_NETWORK
+                UnityEngine.Debug.Log($"注册消息:{msgId}  函数名:{method.Name}");
+#endif
+            }
+        }
     }
 
     public void RegisterOnMessageReceived<T>(Action<object> handler) where T : IMessage
@@ -97,6 +112,23 @@ public class MessageDispatcher : Singleton<MessageDispatcher>
         }
     }
 
+    private void RegisterMethod(int msgId, MethodInfo method)
+    {
+        if (method != null)
+        {
+            if (mMessageMethods.ContainsKey(msgId))
+            {
+                mMessageMethods[msgId].Add(method);
+            }
+            else
+            {
+                var methodList = new List<MethodInfo>();
+                methodList.Add(method);
+                mMessageMethods.Add(msgId, methodList);
+            }
+        }
+    }
+
     protected void RegisterHandler(int msgId, Action<object> handler)
     {
         if (handler != null)
@@ -127,10 +159,20 @@ public class MessageDispatcher : Singleton<MessageDispatcher>
     protected void DispatchMessage(NetMessage packet)
     {
         int msgId = packet.Type;
+
         Action<object> callbackListeners;
         if (mMessageHandlers.TryGetValue(msgId, out callbackListeners))
         {
             callbackListeners?.Invoke(packet.Content);
+        }
+
+        List<MethodInfo> methods;
+        if (mMessageMethods.TryGetValue(msgId, out methods))
+        {
+            foreach (var method in methods)
+            {
+                method.Invoke(packet.Content, null);
+            }
         }
     }
 }

@@ -29,7 +29,8 @@ public class WebSocketDemo : MonoBehaviour
         person.Phone.AddRange(phoneNumList);
 
         //自动注册
-        MessageDispatcher.sInstance.AutoRegiste();
+        //MessageDispatcher.sInstance.AutoRegiste();
+        MessageDispatcher.sInstance.ResponseRegister();
     }
     private void Start()
     {
@@ -44,8 +45,9 @@ public class WebSocketDemo : MonoBehaviour
         MessageDispatcher.sInstance.RegisterOnMessageReceived<Person>(OnReceivedPersonMsg);
     }
 
+    //必须是public的  否则无法被搜集
     [Response(1)]
-    protected void OnReceivedPersonMsg(object msg)
+    public void OnReceivedPersonMsg(object msg)
     {
         if (msg == null)
         {
@@ -94,7 +96,6 @@ public class WebSocketDemo : MonoBehaviour
 
     private void OnDestroy()
     {
-        MessageDispatcher.sInstance.AutoUnRegiste();
         MessageDispatcher.sInstance.UnregisterOnMessageReceived<Person>(OnReceivedPersonMsg);
         socketSession?.Disconnect();
     }
