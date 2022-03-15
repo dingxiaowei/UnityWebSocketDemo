@@ -101,6 +101,7 @@ public class WSSocketConnection
     {
 #if DEBUG_NETWORK
         Debug.LogError(string.Format("WebSocket Error: {0}\n", e.Message));
+        mOnConnected?.Invoke(false);
 #endif
     }
 

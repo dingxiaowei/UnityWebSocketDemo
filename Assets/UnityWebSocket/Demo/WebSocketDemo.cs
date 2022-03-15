@@ -3,10 +3,10 @@ using Protoc;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum MsgType
+public enum MsgType : int
 {
     EPersonMsg = 1,
-    
+
 }
 
 public class WebSocketDemo : MonoBehaviour
@@ -45,7 +45,7 @@ public class WebSocketDemo : MonoBehaviour
         socketSession = new WSSocketSession(address, "1001", headers, (res) =>
         {
             var connectState = res ? "连接成功" : "连接失败";
-            Debug.Log($"websocket {res}");
+            Debug.Log($"websocket {connectState}");
         });
 
         //MessageDispatcher.sInstance.RegisterOnMessageReceived<Person>(OnReceivedPersonMsg);
@@ -82,10 +82,10 @@ public class WebSocketDemo : MonoBehaviour
         {
             socketSession?.Connect();
         }
-        if (GUI.Button(new Rect(10, 60, 100, 40), "连发50条消息"))
+        if (GUI.Button(new Rect(10, 60, 100, 40), "连发100条消息"))
         {
-            for (int i = 0; i < 50; i++)
-                socketSession.Send(1, person);
+            for (int i = 0; i < 100; i++)
+                socketSession.Send((int)MsgType.EPersonMsg, person);
         }
         if (GUI.Button(new Rect(10, 110, 100, 40), "发送消息"))
         {
