@@ -30,17 +30,12 @@ public class MessageDispatcher : Singleton<MessageDispatcher>
     //            if (attr != null)
     //            {
     //                var msgId = (attr as ResponseAttribute).MsgId;
-    //                //RegisterHandler(msgId, method.CreateDelegate(typeof(Action<object>));
+    //                //RegisterHandler(msgId, );
     //                UnityEngine.Debug.LogError(method);
     //                UnityEngine.Debug.LogError(attr);
     //            }
     //        }
     //    }
-    //}
-
-    //public void AutoUnRegiste()
-    //{
-
     //}
 
     public void ResponseRegister()
@@ -171,7 +166,9 @@ public class MessageDispatcher : Singleton<MessageDispatcher>
         {
             foreach (var method in methods)
             {
-                method.Invoke(packet.Content, null);
+                var type = method.ReflectedType;
+                var obj = Activator.CreateInstance(type);
+                method.Invoke(obj, new object[] { packet.Content });
             }
         }
     }

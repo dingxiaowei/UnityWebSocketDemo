@@ -55,6 +55,7 @@ public class WebSocketDemo : MonoBehaviour
             return;
         }
         var person = Person.Parser.ParseFrom(msg as ByteString);
+        Debug.Log("----打印消息分发的角色------");
         DebugPerson(person);
     }
 
