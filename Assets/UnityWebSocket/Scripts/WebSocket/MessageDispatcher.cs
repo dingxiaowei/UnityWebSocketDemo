@@ -13,32 +13,7 @@ public class MessageDispatcher : Singleton<MessageDispatcher>
     protected Queue<NetMessage> mMessageBackQueue = new Queue<NetMessage>();
     protected Type mResponseAttrType = typeof(ResponseAttribute);
 
-    //public void AutoRegiste()
-    //{
-    //    var types = Assembly.GetExecutingAssembly().GetTypes();
-    //    foreach (var t in types)
-    //    {
-    //        if (t.IsAbstract || t.IsInterface)
-    //            continue;
-    //        var methods = t.GetMethods();
-    //        foreach (var method in methods)
-    //        {
-    //            UnityEngine.Debug.Log("----methodname:" + method.Name);
-    //            if (method.IsAbstract || method.IsVirtual)
-    //                continue;
-    //            var attr = method.GetCustomAttribute(mResponseAttrType);
-    //            if (attr != null)
-    //            {
-    //                var msgId = (attr as ResponseAttribute).MsgId;
-    //                //RegisterHandler(msgId, );
-    //                UnityEngine.Debug.LogError(method);
-    //                UnityEngine.Debug.LogError(attr);
-    //            }
-    //        }
-    //    }
-    //}
-
-    public void ResponseRegister()
+    public void ResponseAutoRegister()
     {
         foreach (var method in ResponseAttribute.GetResponseMethod(Reflection.GetExecutingAssembly()))
         {
@@ -127,7 +102,7 @@ public class MessageDispatcher : Singleton<MessageDispatcher>
         }
     }
 
-    protected void RegisterHandler(int msgId, Action<object> handler)
+    public void RegisterHandler(int msgId, Action<object> handler)
     {
         if (handler != null)
         {

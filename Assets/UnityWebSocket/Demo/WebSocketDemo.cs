@@ -11,7 +11,7 @@ public enum MsgType : int
 
 public class WebSocketDemo : MonoBehaviour
 {
-    public string address = "ws://127.0.0.1:5963";
+    private string serverUrl = "ws://127.0.0.1:5963";
     private WSSocketSession socketSession;
     private Person person;//测试消息
 
@@ -33,22 +33,23 @@ public class WebSocketDemo : MonoBehaviour
         phoneNumber2.Type = Person.Types.PhoneType.Mobile;
         phoneNumList.Add(phoneNumber2);
         person.Phone.AddRange(phoneNumList);
-
-        //自动注册
-        //MessageDispatcher.sInstance.AutoRegiste();
-        MessageDispatcher.sInstance.ResponseRegister();
     }
     private void Start()
     {
         var headers = new Dictionary<string, string>();
         headers.Add("User", "dxw");
-        socketSession = new WSSocketSession(address, "1001", headers, (res) =>
+        socketSession = new WSSocketSession(serverUrl, "1001", headers, (res) =>
         {
             var connectState = res ? "连接成功" : "连接失败";
             Debug.Log($"websocket {connectState}");
         });
 
+        //注册监听方式1：自动注册，无需手动写Register方法，前提：需要在监听的方法写上特性，特性支持多个ID号，并且方式需要是public属性的
+        MessageDispatcher.sInstance.ResponseAutoRegister();
+        //注册监听方式2：泛型监听，前提：需要手写在MessageIdList脚本里手动绑定Id跟类型的对应关系
         //MessageDispatcher.sInstance.RegisterOnMessageReceived<Person>(OnReceivedPersonMsg);
+        //注册监听方式3：手动写上Id与监听方法
+        //MessageDispatcher.sInstance.RegisterHandler((int)MsgType.EPersonMsg2, OnReceivedPersonMsg);
     }
 
     //必须是public的  否则无法被搜集
