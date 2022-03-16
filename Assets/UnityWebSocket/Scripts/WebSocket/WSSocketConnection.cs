@@ -41,7 +41,7 @@ public class WSSocketConnection
         }
     }
 
-    public void CreateConnect()
+    public void ConnectAsync()
     {
         mSocket = new WebSocket(mServerUrl);
         mSocket.OnOpen += Socket_OnOpen;

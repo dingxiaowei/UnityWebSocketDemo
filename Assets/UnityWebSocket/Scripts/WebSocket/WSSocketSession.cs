@@ -16,9 +16,9 @@ public class WSSocketSession
         mConnection = new WSSocketConnection(serverUrl, userIdStr, headers, onConnectedCallBack);
     }
 
-    public void Connect()
+    public void ConnectAsync()
     {
-        mConnection?.CreateConnect();
+        mConnection?.ConnectAsync();
     }
 
     public void Send(int msgId, IMessage message)

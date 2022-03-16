@@ -83,7 +83,7 @@ public class WebSocketDemo : MonoBehaviour
     {
         if (GUI.Button(new Rect(10, 10, 100, 40), "连接Socket"))
         {
-            socketSession?.Connect();
+            socketSession?.ConnectAsync();
         }
         if (GUI.Button(new Rect(10, 60, 100, 40), "连发100条消息"))
         {
