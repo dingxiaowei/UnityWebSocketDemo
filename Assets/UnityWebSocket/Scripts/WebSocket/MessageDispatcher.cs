@@ -13,6 +13,7 @@ public class MessageDispatcher : Singleton<MessageDispatcher>
     protected Queue<NetMessage> mMessageBackQueue = new Queue<NetMessage>();
     protected Type mResponseAttrType = typeof(ResponseAttribute);
 
+    private readonly ProtoMessage sender = new ProtoMessage();
     public void ResponseAutoRegister()
     {
         foreach (var method in ResponseAttribute.GetResponseMethod(Reflection.GetExecutingAssembly()))
@@ -144,10 +145,15 @@ public class MessageDispatcher : Singleton<MessageDispatcher>
         {
             foreach (var method in methods)
             {
-                var type = method.ReflectedType;
-                var obj = Activator.CreateInstance(type);
-                method.Invoke(obj, new object[] { packet.Content });
+                // var type = method.ReflectedType;
+                // var obj = Activator.CreateInstance(type);
+                method.Invoke(sender, new object[] { packet.Content });
             }
         }
+    }
+
+    public void ClearMessageMethods()
+    {
+        mMessageMethods.Clear();
     }
 }
