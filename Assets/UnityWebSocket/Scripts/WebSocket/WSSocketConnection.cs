@@ -13,25 +13,29 @@ public class WSSocketConnection
     private IWebSocket mSocket;
     private Action<bool> mOnConnected;
     public bool IsConnect { get { return mSocket != null ? mSocket.ReadyState == WebSocketState.Open : false; } }
+    ObjectPoolWithReset<NetMessage> mNetMessagePool;
     public WSSocketConnection(string serverUrl, string serverIdStr, Dictionary<string, string> headers, Action<bool> onConnectedCallBack)
     {
         mServerUrl = serverUrl;
         mServerIdStr = serverIdStr;
         mHeaders = headers;
         mOnConnected = onConnectedCallBack;
+
+        mNetMessagePool = new ObjectPoolWithReset<NetMessage>(10);
     }
 
     public void Send(int msgId, IMessage message)
     {
         if (mSocket.ReadyState == WebSocketState.Open)
         {
-            var msg = new NetMessage(); //TODO:使用对象池
+            var msg = mNetMessagePool.Get();
             msg.Type = msgId;
             msg.Xid = mServerIdStr;
             msg.Oid = "";
             msg.Content = message.ToByteString();
             //ProtobufHelper.ToBytes(msg);
             mSocket.SendAsync(msg.ToByteArray());
+            mNetMessagePool.Return(msg);
         }
         else
         {
@@ -110,6 +114,7 @@ public class WSSocketConnection
         if (mSocket != null && mSocket.ReadyState != WebSocketState.Closed)
         {
             mSocket.CloseAsync();
+            mNetMessagePool?.Clear();
         }
     }
 }

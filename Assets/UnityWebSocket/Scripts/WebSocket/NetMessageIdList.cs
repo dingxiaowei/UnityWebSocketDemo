@@ -3,7 +3,18 @@ using System.Collections.Generic;
 
 namespace Protoc
 {
-    //public sealed partial class Person : INetMessage { }
+    public sealed partial class NetMessage : IResetable
+    {
+        public void Reset()
+        {
+            this.Content = Google.Protobuf.ByteString.Empty;
+            this.Type = 0;
+        }
+    }
+    public sealed partial class Person : IResetable
+    {
+        public void Reset() { }
+    }
 }
 
 public class NetMessageIdList : Singleton<NetMessageIdList>

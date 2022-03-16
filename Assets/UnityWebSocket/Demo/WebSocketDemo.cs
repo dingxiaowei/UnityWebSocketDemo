@@ -88,7 +88,10 @@ public class WebSocketDemo : MonoBehaviour
         if (GUI.Button(new Rect(10, 60, 100, 40), "连发100条消息"))
         {
             for (int i = 0; i < 100; i++)
+            {
+                person.Id = i;
                 socketSession.Send((int)MsgType.EPersonMsg, person);
+            }
         }
         if (GUI.Button(new Rect(10, 110, 100, 40), "发送消息"))
         {
@@ -96,8 +99,13 @@ public class WebSocketDemo : MonoBehaviour
         }
         if (GUI.Button(new Rect(10, 160, 100, 40), "收发多个消息"))
         {
-            socketSession.Send((int)MsgType.EPersonMsg, person);
-            socketSession.Send((int)MsgType.EPersonMsg2, person);
+            for (int i = 0; i < 10; i++)
+            {
+                person.Id = i;
+                socketSession.Send((int)MsgType.EPersonMsg, person);
+                person.Id = 10 + i;
+                socketSession.Send((int)MsgType.EPersonMsg2, person);
+            }
         }
     }
 
