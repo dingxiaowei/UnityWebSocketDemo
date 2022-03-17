@@ -24,7 +24,7 @@ public class WSSocketConnection
         mNetMessagePool = new ObjectPoolWithReset<NetMessage>(10);
     }
 
-    public void Send(int msgId, IMessage message)
+    public void SendAsync(int msgId, IMessage message)
     {
         if (mSocket.ReadyState == WebSocketState.Open)
         {

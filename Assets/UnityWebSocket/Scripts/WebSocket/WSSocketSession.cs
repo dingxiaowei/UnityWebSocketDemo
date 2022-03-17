@@ -1,8 +1,6 @@
 ﻿using Google.Protobuf;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class WSSocketSession
 {
@@ -21,16 +19,16 @@ public class WSSocketSession
         mConnection?.ConnectAsync();
     }
 
-    public void Send(int msgId, IMessage message)
+    public void SendAsync(int msgId, IMessage message)
     {
-        mConnection?.Send(msgId, message);
+        mConnection?.SendAsync(msgId, message);
     }
 
-    public void Send<T>(IMessage message) where T : IMessage
+    public void SendAsync<T>(IMessage message) where T : IMessage
     {
         var t = typeof(T);
         int msgId = NetMessageIdList.TypeToMsgId(t);
-        mConnection?.Send(msgId, message);
+        mConnection?.SendAsync(msgId, message);
 #if DEBUG_NETWORK
         UnityEngine.Debug.Log("Send message : " + msgId.ToString() + "_" + NetMessageIdList.MsgIdToType(msgId));
 #endif

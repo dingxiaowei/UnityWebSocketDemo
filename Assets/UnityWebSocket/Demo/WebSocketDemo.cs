@@ -90,21 +90,21 @@ public class WebSocketDemo : MonoBehaviour
             for (int i = 0; i < 100; i++)
             {
                 person.Id = i;
-                socketSession.Send((int)MsgType.EPersonMsg, person);
+                socketSession.SendAsync((int)MsgType.EPersonMsg, person);
             }
         }
         if (GUI.Button(new Rect(10, 110, 100, 40), "发送消息"))
         {
-            socketSession.Send<Person>(person);
+            socketSession.SendAsync<Person>(person);
         }
         if (GUI.Button(new Rect(10, 160, 100, 40), "收发多个消息"))
         {
             for (int i = 0; i < 10; i++)
             {
                 person.Id = i;
-                socketSession.Send((int)MsgType.EPersonMsg, person);
+                socketSession.SendAsync((int)MsgType.EPersonMsg, person);
                 person.Id = 10 + i;
-                socketSession.Send((int)MsgType.EPersonMsg2, person);
+                socketSession.SendAsync((int)MsgType.EPersonMsg2, person);
             }
         }
     }
