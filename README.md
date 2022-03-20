@@ -106,11 +106,5 @@ MessageDispatcher.sInstance.ResponseAutoRegister();
   UnityWebSocket.NoWebGL | 非WebGL平台 | 异步  | 仅支持非WebGL平台下的通信。
 
 ### 工程代码
-https://codehub-g.huawei.com/d00605132/UnityWebSocket/home
-感兴趣的同学可以自行学习，后面有空的话，我也会专门做一个网络模块相关的主题分享以及配套网络游戏Demo工程
-
-### 对接测试
-wsurl   ws://cyberverse.hwcloudtest.cn:9995/bff/hola/room/123
-要设置Header User,"dxw"
-发送1020 返回1025 1030
+https://github.com/dingxiaowei/UnityWebSocketDemo
 
