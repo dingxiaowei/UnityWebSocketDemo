@@ -14,7 +14,7 @@
     {
         public void Debug()
         {
-            UnityEngine.Debug.Log($"Message:{this.Message}");
+            UnityEngine.Debug.Log($"Message:{this.Message}  UnitId:{this.UnitId}");
             foreach (var unit in this.Units)
             {
                 UnityEngine.Debug.Log($"ID:{unit.UnitId} X:{unit.X} Y:{unit.Y} Z:{unit.Z}");
