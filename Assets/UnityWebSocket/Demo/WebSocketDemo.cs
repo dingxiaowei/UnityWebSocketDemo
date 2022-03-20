@@ -121,5 +121,6 @@ public class WebSocketDemo : MonoBehaviour
     {
         MessageDispatcher.sInstance.UnregisterOnMessageReceived<Person>(OnReceivedPersonMsg);
         socketSession?.Disconnect();
+        MessageDispatcher.sInstance.Dispose();
     }
 }

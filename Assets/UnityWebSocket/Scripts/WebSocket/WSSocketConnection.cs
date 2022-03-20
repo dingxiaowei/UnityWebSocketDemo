@@ -12,6 +12,7 @@ public class WSSocketConnection
     private Dictionary<string, string> mHeaders;
     private IWebSocket mSocket;
     private Action<bool> mOnConnected;
+    //private IMessagePacker mMessagePacker;
     public bool IsConnect { get { return mSocket != null ? mSocket.ReadyState == WebSocketState.Open : false; } }
     ObjectPoolWithReset<NetMessage> mNetMessagePool;
     public WSSocketConnection(string serverUrl, string serverIdStr, Dictionary<string, string> headers, Action<bool> onConnectedCallBack)
@@ -22,6 +23,7 @@ public class WSSocketConnection
         mOnConnected = onConnectedCallBack;
 
         mNetMessagePool = new ObjectPoolWithReset<NetMessage>(10);
+        //mMessagePacker = new ProtobufPacker();
     }
 
     public void SendAsync(int msgId, IMessage message)

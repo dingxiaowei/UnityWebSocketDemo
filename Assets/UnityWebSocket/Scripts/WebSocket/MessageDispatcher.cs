@@ -13,6 +13,7 @@ public class MessageDispatcher : Singleton<MessageDispatcher>
     protected Queue<NetMessage> mMessageBackQueue = new Queue<NetMessage>();
     protected Type mResponseAttrType = typeof(ResponseAttribute);
 
+
     public void ResponseAutoRegister()
     {
         foreach (var method in ResponseAttribute.GetResponseMethod(Reflection.GetExecutingAssembly()))
@@ -68,6 +69,8 @@ public class MessageDispatcher : Singleton<MessageDispatcher>
         {
             NetMessage packet = mMessageFrontQueue.Dequeue();
             DispatchMessage(packet);
+            //新的方式
+            Handler(packet);
             dispatchedMessageCount++;
 
             if (dispatchedMessageCount >= MAX_DISPATCH_MESSAGE_COUNT_PER_FRAME)
@@ -147,6 +150,79 @@ public class MessageDispatcher : Singleton<MessageDispatcher>
                 var type = method.ReflectedType;
                 var obj = Activator.CreateInstance(type);
                 method.Invoke(obj, new object[] { packet.Content });
+            }
+        }
+    }
+
+    public void Dispose()
+    {
+        this.mMessageHandlers.Clear();
+        this.mMessageMethods.Clear();
+        this.mMessageFrontQueue.Clear();
+        this.mMessageBackQueue.Clear();
+
+        this.handlers.Clear();
+        OpcodeTypeManager.sInstance.Dispose();
+    }
+
+
+
+    //另外一种自动注册的实现方式
+    protected readonly Dictionary<int, List<IMHandler>> handlers = new Dictionary<int, List<IMHandler>>();
+
+    void RegisterHandler(int opcode, IMHandler handler)
+    {
+        if (!this.handlers.ContainsKey(opcode))
+        {
+            this.handlers.Add(opcode, new List<IMHandler>());
+        }
+        this.handlers[opcode].Add(handler);
+    }
+
+    protected void Handler(NetMessage msg)
+    {
+        List<IMHandler> actions;
+        if (!this.handlers.TryGetValue(msg.Type, out actions))
+        {
+            UnityEngine.Debug.LogError($"消息 {msg.Type} 没有处理");
+            return;
+        }
+
+        foreach (IMHandler ev in actions)
+        {
+            try
+            {
+                ev.Handle(msg.Content);
+            }
+            catch (Exception e)
+            {
+                UnityEngine.Debug.LogError(e);
+            }
+        }
+    }
+
+    public void AutoRegistHandlers()
+    {
+        OpcodeTypeManager.sInstance.Init();
+        this.handlers.Clear();
+
+        var types = MessageHandlerAttribute.GetMessageHandlerTypes(Reflection.GetExecutingAssembly());
+        foreach (var type in types)
+        {
+            var attrs = type.GetCustomAttributes(typeof(MessageHandlerAttribute), false);
+            if (attrs.Length == 0)
+                continue;
+            var imHandler = Activator.CreateInstance(type) as IMHandler;
+            if (imHandler == null)
+            {
+                UnityEngine.Debug.LogError($"message handle {type.Name} 需要继承 IMHandler");
+                continue;
+            }
+            var messageType = imHandler.GetMessageType();
+            int opcode = OpcodeTypeManager.sInstance.GetOpcode(messageType);
+            if (opcode != 0)
+            {
+                this.RegisterHandler(opcode, imHandler);
             }
         }
     }
