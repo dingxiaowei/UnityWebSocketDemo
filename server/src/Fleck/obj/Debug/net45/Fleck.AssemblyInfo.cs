@@ -20,7 +20,6 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyProductAttribute("Fleck")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Fleck")]
 [assembly: System.Reflection.AssemblyVersionAttribute("0.0.0.1")]
-[assembly: System.Reflection.AssemblyMetadataAttribute("RepositoryUrl", "https://github.com/statianzo/Fleck")]
 
 // 由 MSBuild WriteCodeFragment 类生成。
 

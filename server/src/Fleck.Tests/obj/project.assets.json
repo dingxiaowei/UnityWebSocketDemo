@@ -6130,7 +6130,6 @@
       },
       "frameworks": {
         "netcoreapp2.0": {
-          "targetAlias": "netcoreapp2.0",
           "projectReferences": {
             "D:\\Work\\GitHub\\UnityWebSocketDemo\\server\\src\\Fleck\\Fleck.csproj": {
               "projectPath": "D:\\Work\\GitHub\\UnityWebSocketDemo\\server\\src\\Fleck\\Fleck.csproj"
@@ -6138,7 +6137,6 @@
           }
         },
         "net45": {
-          "targetAlias": "net45",
           "projectReferences": {
             "D:\\Work\\GitHub\\UnityWebSocketDemo\\server\\src\\Fleck\\Fleck.csproj": {
               "projectPath": "D:\\Work\\GitHub\\UnityWebSocketDemo\\server\\src\\Fleck\\Fleck.csproj"
@@ -6154,7 +6152,6 @@
     },
     "frameworks": {
       "netcoreapp2.0": {
-        "targetAlias": "netcoreapp2.0",
         "dependencies": {
           "Microsoft.NET.Test.Sdk": {
             "target": "Package",
@@ -6180,19 +6177,12 @@
           }
         },
         "imports": [
-          "net461",
-          "net462",
-          "net47",
-          "net471",
-          "net472",
-          "net48"
+          "net461"
         ],
         "assetTargetFallback": true,
-        "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
+        "warn": true
       },
       "net45": {
-        "targetAlias": "net45",
         "dependencies": {
           "Microsoft.NET.Test.Sdk": {
             "target": "Package",
@@ -6210,8 +6200,7 @@
             "target": "Package",
             "version": "[3.10.1, )"
           }
-        },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
+        }
       }
     }
   }
