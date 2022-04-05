@@ -19,6 +19,11 @@ public class WSSocketSession
         mConnection?.ConnectAsync();
     }
 
+    public void ReConnect()
+    {
+        mConnection?.ReConnect();
+    }
+
     public void SendAsync(int msgId, IMessage message)
     {
         mConnection?.SendAsync(msgId, message);

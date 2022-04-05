@@ -1,0 +1,16 @@
+D:\Work\GitHub\Fleck\src\Fleck\bin\Debug\net40\Fleck.dll
+D:\Work\GitHub\Fleck\src\Fleck\bin\Debug\net40\Fleck.pdb
+D:\Work\GitHub\Fleck\src\Fleck\obj\Debug\net40\Fleck.csprojAssemblyReference.cache
+D:\Work\GitHub\Fleck\src\Fleck\obj\Debug\net40\Fleck.csproj.CoreCompileInputs.cache
+D:\Work\GitHub\Fleck\src\Fleck\obj\Debug\net40\Fleck.AssemblyInfoInputs.cache
+D:\Work\GitHub\Fleck\src\Fleck\obj\Debug\net40\Fleck.AssemblyInfo.cs
+D:\Work\GitHub\Fleck\src\Fleck\obj\Debug\net40\Fleck.dll
+D:\Work\GitHub\Fleck\src\Fleck\obj\Debug\net40\Fleck.pdb
+D:\Work\GitHub\UnityWebSocketDemo\server\src\Fleck\bin\Debug\net40\Fleck.dll
+D:\Work\GitHub\UnityWebSocketDemo\server\src\Fleck\bin\Debug\net40\Fleck.pdb
+D:\Work\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\net40\Fleck.csproj.AssemblyReference.cache
+D:\Work\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\net40\Fleck.AssemblyInfoInputs.cache
+D:\Work\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\net40\Fleck.AssemblyInfo.cs
+D:\Work\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\net40\Fleck.csproj.CoreCompileInputs.cache
+D:\Work\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\net40\Fleck.dll
+D:\Work\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\net40\Fleck.pdb

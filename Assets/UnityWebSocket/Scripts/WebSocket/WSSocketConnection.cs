@@ -60,6 +60,12 @@ public class WSSocketConnection
         mSocket.ConnectAsync(mHeaders);
     }
 
+    public void ReConnect()
+    {
+        if (mSocket != null)
+            mSocket.ConnectAsync(mHeaders);
+    }
+
     private void Socket_OnOpen(object sender, OpenEventArgs e)
     {
 #if DEBUG_NETWORK

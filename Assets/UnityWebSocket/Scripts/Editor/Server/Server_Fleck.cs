@@ -64,7 +64,7 @@ namespace UnityWebSocket.Editor
         private List<string> logs = new List<string>();
         private Vector2 scroll;
         private bool needRepaint;
-        private int port = 5963;
+        private int port = 8081;
         private bool wss = false;
 
         private void OnGUI()

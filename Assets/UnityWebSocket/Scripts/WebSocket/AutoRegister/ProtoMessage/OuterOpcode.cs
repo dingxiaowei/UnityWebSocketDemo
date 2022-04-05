@@ -6,8 +6,10 @@
         public const int S2C_EnterMapResponse = 102;
     }
 
-    [Message(OuterOpcode.C2S_EnterMapRequest)] 
-    public partial class C2S_EnterMap { }
+    [Message(OuterOpcode.C2S_EnterMapRequest)]
+    public partial class C2S_EnterMap
+    {
+    }
 
     [Message(OuterOpcode.S2C_EnterMapResponse)]  //TODO:这里编号可以写proto里面的id编号
     public partial class S2C_EnterMap
