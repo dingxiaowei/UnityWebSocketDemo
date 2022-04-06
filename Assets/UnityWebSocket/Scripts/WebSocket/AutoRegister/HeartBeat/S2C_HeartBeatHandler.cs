@@ -13,10 +13,7 @@ namespace Protoc.AutoRegister.HeartBeat
         #endif
             var heartResponse = S2C_HeartBeatResponse.Parser.ParseFrom(content);
             heartResponse.Debug();
-
             HeartBeatManager.sInstance.ServerTimestamp = heartResponse.ClientTimestamp;
         }
     }
-    
-    
 }

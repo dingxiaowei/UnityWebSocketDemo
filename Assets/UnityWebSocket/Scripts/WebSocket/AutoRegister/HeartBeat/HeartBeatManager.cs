@@ -41,8 +41,7 @@ namespace Protoc.AutoRegister.HeartBeat
         public DateTime ToLocalDateTime(long timeStamp)
         {
             long timeStampSecond = timeStamp / 1000 + GetZoneOffTimeSeconds();
-            var serverTime = new DateTime(621355968000000000 + (long) timeStampSecond * (long) 10000000,
-                DateTimeKind.Utc);
+            var serverTime = new DateTime(621355968000000000 + (long)timeStampSecond * (long)10000000, DateTimeKind.Utc);
             return serverTime;
         }
 
@@ -53,7 +52,7 @@ namespace Protoc.AutoRegister.HeartBeat
         private long GetZoneOffTimeSeconds()
         {
             TimeZoneInfo timeZoneInfo = TimeZoneInfo.Local;
-            return (long) timeZoneInfo.BaseUtcOffset.TotalSeconds;
+            return (long)timeZoneInfo.BaseUtcOffset.TotalSeconds;
         }
 
         /// <summary>
@@ -72,12 +71,11 @@ namespace Protoc.AutoRegister.HeartBeat
         public void SendHeartBeatRequest()
         {
             C2S_HeartBeatRequest heartBeatRequest = new C2S_HeartBeatRequest();
-            heartBeatRequest.ClientTimestamp = GetClientTimestamp();
-            NetManager.sInstance.SocketSession?.SendAsync((int) OuterOpcode.S2C_HeartBeatResponse, heartBeatRequest);
-
+            heartBeatRequest.ClientTimestamp = GetClientTimestamp(); //客户端上发的时间戳为了服务器返回，应该是用的服务器自己的时间戳
+            NetManager.sInstance.SocketSession?.SendAsync((int)OuterOpcode.S2C_HeartBeatResponse, heartBeatRequest);
             CheckNetCanReConnect();
         }
-        
+
         /// <summary>
         /// 检查心跳是否触发断线重连
         /// </summary>
@@ -86,9 +84,9 @@ namespace Protoc.AutoRegister.HeartBeat
             //网络连接正常
             if (NetManager.sInstance.SocketSession.IsConnected)
                 return;
-            
+
             //心跳超时
-            if ( (GetClientTimestamp() - ServerTimestamp) >= HEART_BEAT_INTERVAL_TIME)
+            if ((GetClientTimestamp() - ServerTimestamp) >= HEART_BEAT_INTERVAL_TIME)
             {
                 if (NetManager.sInstance.SocketSession.IsConnected)
                 {
