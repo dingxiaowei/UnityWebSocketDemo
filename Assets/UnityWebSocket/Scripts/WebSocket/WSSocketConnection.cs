@@ -2,6 +2,7 @@
 using Protoc;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityWebSocket;
 
@@ -12,6 +13,8 @@ public class WSSocketConnection
     private Dictionary<string, string> mHeaders;
     private IWebSocket mSocket;
     private Action<bool> mOnConnected;
+    private bool connectResReturn = false;
+    private int reconnectTryTimes = 0;
     //private IMessagePacker mMessagePacker;
     public bool IsConnect { get { return mSocket != null ? mSocket.ReadyState == WebSocketState.Open : false; } }
     ObjectPoolWithReset<NetMessage> mNetMessagePool;
@@ -21,7 +24,8 @@ public class WSSocketConnection
         mServerIdStr = serverIdStr;
         mHeaders = headers;
         mOnConnected = onConnectedCallBack;
-
+        connectResReturn = false;
+        reconnectTryTimes = 0;
         mNetMessagePool = new ObjectPoolWithReset<NetMessage>(10);
         //mMessagePacker = new ProtobufPacker();
     }
@@ -49,6 +53,28 @@ public class WSSocketConnection
 
     public void ConnectAsync()
     {
+        connectResReturn = false;
+        Task.Delay(5000).ContinueWith(_ =>
+        {
+            Debug.Log("5s检测连接结果");
+            if (!connectResReturn)
+            {
+                if (reconnectTryTimes++ < 3)
+                {
+                    Debug.LogError("没收到返回结果，并且尝试次数小于3，继续尝试重连");
+                    ConnectAsync();
+                }
+                else
+                {
+                    Debug.Log("异常连接没有收到返回结果重新尝试次数大于3，不继续尝试重连");
+                }
+            }
+            else
+            {
+                Debug.Log("socket连接结果正常返回");
+            }
+        });
+        Debug.Log($"serverUrl:{mServerUrl}");
         mSocket = new WebSocket(mServerUrl);
         mSocket.OnOpen += Socket_OnOpen;
         mSocket.OnMessage += Socket_OnMessage;
@@ -57,13 +83,16 @@ public class WSSocketConnection
 #if DEBUG_NETWORK
         Debug.Log(string.Format("Connecting...\n"));
 #endif
+        Debug.Log($"header是否为空:{mHeaders == null}");
         mSocket.ConnectAsync(mHeaders);
     }
 
     public void ReConnect()
     {
-        if (mSocket != null)
-            mSocket.ConnectAsync(mHeaders);
+        //if (mSocket != null)
+        //    mSocket.ConnectAsync(mHeaders);
+        DisConnect();
+        ConnectAsync();
     }
 
     private void Socket_OnOpen(object sender, OpenEventArgs e)
@@ -71,6 +100,7 @@ public class WSSocketConnection
 #if DEBUG_NETWORK
         Debug.Log(string.Format("Connected: {0}\n", mServerUrl));
 #endif
+        connectResReturn = true;
         if (mSocket.ReadyState == WebSocketState.Open)
         {
             mOnConnected?.Invoke(true);
@@ -115,6 +145,7 @@ public class WSSocketConnection
         Debug.LogError(string.Format("WebSocket Error: {0}\n", e.Message));
         mOnConnected?.Invoke(false);
 #endif
+        connectResReturn = true;
     }
 
     public void DisConnect()

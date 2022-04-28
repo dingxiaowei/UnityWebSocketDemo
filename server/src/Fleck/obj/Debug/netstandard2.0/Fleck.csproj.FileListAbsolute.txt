@@ -10,9 +10,9 @@ D:\Work\GitHub\Fleck\src\Fleck\obj\Debug\netstandard2.0\Fleck.pdb
 D:\Work\GitHub\UnityWebSocketDemo\server\src\Fleck\bin\Debug\netstandard2.0\Fleck.deps.json
 D:\Work\GitHub\UnityWebSocketDemo\server\src\Fleck\bin\Debug\netstandard2.0\Fleck.dll
 D:\Work\GitHub\UnityWebSocketDemo\server\src\Fleck\bin\Debug\netstandard2.0\Fleck.pdb
-D:\Work\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\netstandard2.0\Fleck.csproj.AssemblyReference.cache
 D:\Work\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\netstandard2.0\Fleck.AssemblyInfoInputs.cache
 D:\Work\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\netstandard2.0\Fleck.AssemblyInfo.cs
 D:\Work\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\netstandard2.0\Fleck.csproj.CoreCompileInputs.cache
 D:\Work\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\netstandard2.0\Fleck.dll
 D:\Work\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\netstandard2.0\Fleck.pdb
+D:\Work\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\netstandard2.0\Fleck.csprojAssemblyReference.cache

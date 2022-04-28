@@ -11,8 +11,8 @@ D:\Work\GitHub\UnityWebSocketDemo\server\src\Samples\ConsoleApp\bin\Debug\Fleck.
 D:\Work\GitHub\UnityWebSocketDemo\server\src\Samples\ConsoleApp\bin\Debug\Fleck.Samples.ConsoleApp.pdb
 D:\Work\GitHub\UnityWebSocketDemo\server\src\Samples\ConsoleApp\bin\Debug\Fleck.dll
 D:\Work\GitHub\UnityWebSocketDemo\server\src\Samples\ConsoleApp\bin\Debug\Fleck.pdb
-D:\Work\GitHub\UnityWebSocketDemo\server\src\Samples\ConsoleApp\obj\x86\Debug\ConsoleApp.csproj.AssemblyReference.cache
 D:\Work\GitHub\UnityWebSocketDemo\server\src\Samples\ConsoleApp\obj\x86\Debug\ConsoleApp.csproj.CoreCompileInputs.cache
 D:\Work\GitHub\UnityWebSocketDemo\server\src\Samples\ConsoleApp\obj\x86\Debug\ConsoleApp.csproj.CopyComplete
 D:\Work\GitHub\UnityWebSocketDemo\server\src\Samples\ConsoleApp\obj\x86\Debug\Fleck.Samples.ConsoleApp.exe
 D:\Work\GitHub\UnityWebSocketDemo\server\src\Samples\ConsoleApp\obj\x86\Debug\Fleck.Samples.ConsoleApp.pdb
+D:\Work\GitHub\UnityWebSocketDemo\server\src\Samples\ConsoleApp\obj\x86\Debug\ConsoleApp.csprojAssemblyReference.cache

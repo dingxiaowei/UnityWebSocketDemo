@@ -11,7 +11,7 @@ public enum MsgType : int
 
 public class WebSocketDemo : MonoBehaviour
 {
-    private string serverUrl = "ws://127.0.0.1:5963";
+    private string serverUrl = "ws://124.223.54.98:8081";
     private WSSocketSession socketSession;
     private Person person;//测试消息
 
@@ -84,6 +84,14 @@ public class WebSocketDemo : MonoBehaviour
         if (GUI.Button(new Rect(10, 10, 100, 40), "连接Socket"))
         {
             socketSession?.ConnectAsync();
+        }
+        if (GUI.Button(new Rect(110, 10, 100, 40), "断开Socket"))
+        {
+            socketSession?.Disconnect();
+        }
+        if (GUI.Button(new Rect(210, 10, 100, 40), "重连Socket"))
+        {
+            socketSession?.ReConnect();
         }
         if (GUI.Button(new Rect(10, 60, 100, 40), "连发100条消息"))
         {
