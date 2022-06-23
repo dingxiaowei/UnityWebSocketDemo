@@ -87,6 +87,9 @@ MessageDispatcher.sInstance.ResponseAutoRegister();
 - Protobuf3的生成
   在Tools/ProtoGenTools中点击GenAllC#.bat就会把当前目录下所有的proto文件生成对应的C#数据类，会生成到client文件夹下，然后点击CopyC#ProtocolsToCorePlay.bat会将C#类文件自动拷贝到Unity的对应工程目录下
 
+- 断线重连
+![](img/4.jpg)
+
 - 功能菜单：
   - Tools -> UnityWebSocket -> Server(Fleck) ， WebSocket 服务器，基于 [Fleck](https://github.com/statianzo/Fleck) 插件实现的测试服务器，仅用于开发测试。
 
