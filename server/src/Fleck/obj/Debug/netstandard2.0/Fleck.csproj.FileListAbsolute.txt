@@ -16,3 +16,12 @@ D:\Work\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\netstandard2.0\Flec
 D:\Work\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\netstandard2.0\Fleck.csproj.CoreCompileInputs.cache
 D:\Work\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\netstandard2.0\Fleck.dll
 D:\Work\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\netstandard2.0\Fleck.pdb
+D:\Study\GitHub\UnityWebSocketDemo\server\src\Fleck\bin\Debug\netstandard2.0\Fleck.deps.json
+D:\Study\GitHub\UnityWebSocketDemo\server\src\Fleck\bin\Debug\netstandard2.0\Fleck.dll
+D:\Study\GitHub\UnityWebSocketDemo\server\src\Fleck\bin\Debug\netstandard2.0\Fleck.pdb
+D:\Study\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\netstandard2.0\Fleck.csprojAssemblyReference.cache
+D:\Study\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\netstandard2.0\Fleck.csproj.CoreCompileInputs.cache
+D:\Study\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\netstandard2.0\Fleck.AssemblyInfoInputs.cache
+D:\Study\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\netstandard2.0\Fleck.AssemblyInfo.cs
+D:\Study\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\netstandard2.0\Fleck.dll
+D:\Study\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\netstandard2.0\Fleck.pdb

@@ -16,3 +16,12 @@ D:\Work\GitHub\UnityWebSocketDemo\server\src\Samples\ConsoleApp\obj\x86\Debug\Co
 D:\Work\GitHub\UnityWebSocketDemo\server\src\Samples\ConsoleApp\obj\x86\Debug\ConsoleApp.csproj.CopyComplete
 D:\Work\GitHub\UnityWebSocketDemo\server\src\Samples\ConsoleApp\obj\x86\Debug\Fleck.Samples.ConsoleApp.exe
 D:\Work\GitHub\UnityWebSocketDemo\server\src\Samples\ConsoleApp\obj\x86\Debug\Fleck.Samples.ConsoleApp.pdb
+D:\Study\GitHub\UnityWebSocketDemo\server\src\Samples\ConsoleApp\bin\Debug\Fleck.Samples.ConsoleApp.exe
+D:\Study\GitHub\UnityWebSocketDemo\server\src\Samples\ConsoleApp\bin\Debug\Fleck.Samples.ConsoleApp.pdb
+D:\Study\GitHub\UnityWebSocketDemo\server\src\Samples\ConsoleApp\bin\Debug\Fleck.dll
+D:\Study\GitHub\UnityWebSocketDemo\server\src\Samples\ConsoleApp\bin\Debug\Fleck.pdb
+D:\Study\GitHub\UnityWebSocketDemo\server\src\Samples\ConsoleApp\obj\x86\Debug\ConsoleApp.csprojAssemblyReference.cache
+D:\Study\GitHub\UnityWebSocketDemo\server\src\Samples\ConsoleApp\obj\x86\Debug\ConsoleApp.csproj.CoreCompileInputs.cache
+D:\Study\GitHub\UnityWebSocketDemo\server\src\Samples\ConsoleApp\obj\x86\Debug\ConsoleApp.csproj.CopyComplete
+D:\Study\GitHub\UnityWebSocketDemo\server\src\Samples\ConsoleApp\obj\x86\Debug\Fleck.Samples.ConsoleApp.exe
+D:\Study\GitHub\UnityWebSocketDemo\server\src\Samples\ConsoleApp\obj\x86\Debug\Fleck.Samples.ConsoleApp.pdb

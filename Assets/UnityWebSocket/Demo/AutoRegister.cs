@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class AutoRegister : MonoBehaviour
 {
-    private string serverUrl = "ws://124.223.54.98:8081";
+    private string serverUrl = "ws://116.205.247.142:8081";
     //private string serverUrl = "ws://127.0.0.1:8081";
     private WSSocketSession socketSession;
 
@@ -40,9 +40,11 @@ public class AutoRegister : MonoBehaviour
                 unitInfos.Add(new UnitInfo() { UnitId = 222, X = 1, Y = 1, Z = 1 });
                 msg.Units.AddRange(unitInfos);
                 socketSession.SendAsync((int)OuterOpcode.S2C_EnterMapResponse, msg);
+                Debug.Log("-----------客户端向服务器发送消息");
+                msg.Debug();
             }
         }
-        if (GUI.Button(new Rect(10, 110, 100, 40), "连发消息"))
+        if (GUI.Button(new Rect(10, 110, 100, 40), "发送消息"))
         {
             S2C_EnterMap msg = new S2C_EnterMap();
             msg.Message = "服务器向客户端发送的进入地图消息";
