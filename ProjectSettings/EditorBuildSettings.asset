@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/UnityWebSocket/Demo/AutoRegister.unity
+    guid: 892df7f8f7720aa41bc6a7e049beb300
   m_configObjects: {}

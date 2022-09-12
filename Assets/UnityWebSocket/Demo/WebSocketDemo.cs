@@ -11,7 +11,7 @@ public enum MsgType : int
 
 public class WebSocketDemo : MonoBehaviour
 {
-    private string serverUrl = "ws://124.223.54.98:8081";
+    private string serverUrl = "ws://116.205.247.142:8081";
     private WSSocketSession socketSession;
     private Person person;//测试消息
 

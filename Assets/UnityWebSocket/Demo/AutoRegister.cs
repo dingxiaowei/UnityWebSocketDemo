@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 测试自动注册
+/// </summary>
 public class AutoRegister : MonoBehaviour
 {
     private string serverUrl = "ws://116.205.247.142:8081";
