@@ -23,6 +23,9 @@ public class AutoRegister : MonoBehaviour
     public Text Adress;//音频保存地址
     private int minFreq, maxFreq;//最小和最大频率
     private byte[] data;
+    private bool isInRecord;
+    private bool isPlayRecord;
+    private float recordStartTime;
 
     public static System.Action<byte[]> OnReceiveVoiceMsg;
     /// <summary>
@@ -34,8 +37,10 @@ public class AutoRegister : MonoBehaviour
         {
             if (!Microphone.IsRecording(null))
             {
+                isInRecord = true;
+                recordStartTime = Time.realtimeSinceStartup;
                 RecordedClip = Microphone.Start(null, false, 60, maxFreq);
-                Infotxt.text = "开始录音！";
+                Infotxt.text = $"开始录音:{(Time.realtimeSinceStartup - recordStartTime):0.00}s";
             }
             else
             {
@@ -52,6 +57,7 @@ public class AutoRegister : MonoBehaviour
     /// </summary>
     public void Stop()
     {
+        isInRecord = false;
         data = TestMicro.GetRealAudio(ref RecordedClip);
         Microphone.End(null);
         Infotxt.text = "录音结束！";
@@ -64,9 +70,10 @@ public class AutoRegister : MonoBehaviour
     {
         if (!Microphone.IsRecording(null))
         {
+            isPlayRecord = true;
             audioSource.clip = RecordedClip;
             audioSource.Play();
-            Infotxt.text = "正在播放录音！";
+            Infotxt.text = $"正在播放录音:{audioSource.time:0.00}s";
         }
         else
         {
@@ -167,6 +174,23 @@ public class AutoRegister : MonoBehaviour
                 msg.Voice = Google.Protobuf.ByteString.Empty;
             }
             socketSession.SendAsync((int)OuterOpcode.S2C_EnterMapResponse, msg);
+        }
+        
+        if (isInRecord)
+        {
+            Infotxt.text = $"开始录音:{(Time.realtimeSinceStartup - recordStartTime):0.00}s";
+        }
+
+        if (isPlayRecord)
+        {
+            if (audioSource.isPlaying)
+            {
+                Infotxt.text = $"正在播放录音:{audioSource.time:0.00}s";
+            }
+            else
+            {
+                isPlayRecord = false;
+            }
         }
     }
 
