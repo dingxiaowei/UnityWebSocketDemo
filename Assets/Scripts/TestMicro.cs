@@ -69,7 +69,6 @@ public class TestMicro : MonoBehaviour
         data = GetRealAudio(ref RecordedClip);
         Microphone.End(null);
         Infotxt.text = "Â¼Òô½áÊø£¡";
-
     }
     /// <summary>
     /// ²¥·ÅÂ¼Òô

@@ -69,6 +69,7 @@
     <Compile Include="Assets\UnityWebSocket\Scripts\WebSocket\AutoRegister\OpcodeTypeManager.cs" />
     <Compile Include="Assets\UnityWebSocket\Scripts\ProtoMsg\Msg.cs" />
     <Compile Include="Assets\UnityWebSocket\Scripts\ProtoMsg\RoomChat.cs" />
+    <Compile Include="Assets\Scripts\TestMicro.cs" />
     <Compile Include="Assets\UnityWebSocket\Scripts\WebSocket\AutoRegister\MessageHandlerAttribute.cs" />
     <Compile Include="Assets\UnityWebSocket\Scripts\ProtoMsg\RoomStatus.cs" />
     <Compile Include="Assets\UnityWebSocket\Scripts\WebSocket\AutoRegister\MessageAttribute.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Assets\UnityWebSocket\Scripts\ProtoMsg\RoomEvent.cs" />
     <Compile Include="Assets\UnityWebSocket\Scripts\WebSocket\AutoRegister\ProtoMessage\OuterOpcode.cs" />
     <Compile Include="Assets\UnityWebSocket\Scripts\ProtoMsg\Person.cs" />
+    <Compile Include="Assets\Scripts\WaveUtility.cs" />
     <Compile Include="Assets\UnityWebSocket\Scripts\WebSocket\IMessagePacker.cs" />
     <Compile Include="Assets\UnityWebSocket\Scripts\WebSocket\AutoRegister\HeartBeat\HeartBeatManager.cs" />
     <Compile Include="Assets\UnityWebSocket\Demo\AutoRegister.cs" />
@@ -100,8 +102,6 @@
     <Compile Include="Assets\UnityWebSocket\Scripts\WebSocket\AutoRegister\PacketParser.cs" />
     <Compile Include="Assets\UnityWebSocket\Scripts\WebSocket\ProtobufHelper.cs" />
     <Compile Include="Assets\UnityWebSocket\Scripts\WebSocket\AutoRegister\HeartBeat\S2C_HeartBeatHandler.cs" />
-    <Compile Include="Assets\Scripts\WaveUtility.cs" />
-    <Compile Include="Assets\Scripts\TestMicro.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

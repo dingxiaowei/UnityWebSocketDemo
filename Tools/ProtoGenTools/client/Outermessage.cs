@@ -25,16 +25,16 @@ namespace Protoc {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "ChJvdXRlcm1lc3NhZ2UucHJvdG8SBnByb3RvYyIdCgxDMlNfRW50ZXJNYXAS",
-            "DQoFUnBjSWQYWiABKAUibgoMUzJDX0VudGVyTWFwEg0KBVJwY0lkGFogASgF",
+            "DQoFUnBjSWQYWiABKAUifQoMUzJDX0VudGVyTWFwEg0KBVJwY0lkGFogASgF",
             "Eg0KBUVycm9yGFsgASgFEg8KB01lc3NhZ2UYXCABKAkSDgoGVW5pdElkGAEg",
-            "ASgDEh8KBVVuaXRzGAIgAygLMhAucHJvdG9jLlVuaXRJbmZvIjsKCFVuaXRJ",
-            "bmZvEg4KBlVuaXRJZBgBIAEoAxIJCgFYGAIgASgCEgkKAVkYAyABKAISCQoB",
-            "WhgEIAEoAmIGcHJvdG8z"));
+            "ASgDEh8KBVVuaXRzGAIgAygLMhAucHJvdG9jLlVuaXRJbmZvEg0KBVZvaWNl",
+            "GAMgASgMIjsKCFVuaXRJbmZvEg4KBlVuaXRJZBgBIAEoAxIJCgFYGAIgASgC",
+            "EgkKAVkYAyABKAISCQoBWhgEIAEoAmIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Protoc.C2S_EnterMap), global::Protoc.C2S_EnterMap.Parser, new[]{ "RpcId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Protoc.S2C_EnterMap), global::Protoc.S2C_EnterMap.Parser, new[]{ "RpcId", "Error", "Message", "UnitId", "Units" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Protoc.S2C_EnterMap), global::Protoc.S2C_EnterMap.Parser, new[]{ "RpcId", "Error", "Message", "UnitId", "Units", "Voice" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Protoc.UnitInfo), global::Protoc.UnitInfo.Parser, new[]{ "UnitId", "X", "Y", "Z" }, null, null, null, null)
           }));
     }
@@ -270,6 +270,7 @@ namespace Protoc {
       message_ = other.message_;
       unitId_ = other.unitId_;
       units_ = other.units_.Clone();
+      voice_ = other.voice_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -344,6 +345,18 @@ namespace Protoc {
       get { return units_; }
     }
 
+    /// <summary>Field number for the "Voice" field.</summary>
+    public const int VoiceFieldNumber = 3;
+    private pb::ByteString voice_ = pb::ByteString.Empty;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pb::ByteString Voice {
+      get { return voice_; }
+      set {
+        voice_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -364,6 +377,7 @@ namespace Protoc {
       if (Message != other.Message) return false;
       if (UnitId != other.UnitId) return false;
       if(!units_.Equals(other.units_)) return false;
+      if (Voice != other.Voice) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -376,6 +390,7 @@ namespace Protoc {
       if (Message.Length != 0) hash ^= Message.GetHashCode();
       if (UnitId != 0L) hash ^= UnitId.GetHashCode();
       hash ^= units_.GetHashCode();
+      if (Voice.Length != 0) hash ^= Voice.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -399,6 +414,10 @@ namespace Protoc {
         output.WriteInt64(UnitId);
       }
       units_.WriteTo(output, _repeated_units_codec);
+      if (Voice.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteBytes(Voice);
+      }
       if (RpcId != 0) {
         output.WriteRawTag(208, 5);
         output.WriteInt32(RpcId);
@@ -426,6 +445,10 @@ namespace Protoc {
         output.WriteInt64(UnitId);
       }
       units_.WriteTo(ref output, _repeated_units_codec);
+      if (Voice.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteBytes(Voice);
+      }
       if (RpcId != 0) {
         output.WriteRawTag(208, 5);
         output.WriteInt32(RpcId);
@@ -461,6 +484,9 @@ namespace Protoc {
         size += 1 + pb::CodedOutputStream.ComputeInt64Size(UnitId);
       }
       size += units_.CalculateSize(_repeated_units_codec);
+      if (Voice.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeBytesSize(Voice);
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -486,6 +512,9 @@ namespace Protoc {
         UnitId = other.UnitId;
       }
       units_.Add(other.units_);
+      if (other.Voice.Length != 0) {
+        Voice = other.Voice;
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -507,6 +536,10 @@ namespace Protoc {
           }
           case 18: {
             units_.AddEntriesFrom(input, _repeated_units_codec);
+            break;
+          }
+          case 26: {
+            Voice = input.ReadBytes();
             break;
           }
           case 720: {
@@ -542,6 +575,10 @@ namespace Protoc {
           }
           case 18: {
             units_.AddEntriesFrom(ref input, _repeated_units_codec);
+            break;
+          }
+          case 26: {
+            Voice = input.ReadBytes();
             break;
           }
           case 720: {
