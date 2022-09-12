@@ -30,6 +30,8 @@ public class AutoRegister : MonoBehaviour
     /// </summary>
     public void Begin()
     {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep; //设置不息屏
+        Application.runInBackground = true;
         if (micConnected)
         {
             if (!Microphone.IsRecording(null))

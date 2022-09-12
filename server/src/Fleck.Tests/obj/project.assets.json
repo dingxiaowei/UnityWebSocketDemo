@@ -2289,7 +2289,7 @@
       ]
     },
     "Microsoft.NETCore.Platforms/2.0.0": {
-      "sha512": "VdLJOCXhZaEMY7Hm2GKiULmn7IEPFE4XC5LPSfBVCUIA8YLZVh846gtfBJalsPQF2PlzdD7ecX7DZEulJ402ZQ==",
+      "sha512": "5BdAWDgMNwf90L0J+C/eh6kfHDa37ViL1cBL1nv5zPA4TB2cGV51YiQyvzCEy9DBE0LwwMI4+PkUpIekKyocSA==",
       "type": "package",
       "path": "microsoft.netcore.platforms/2.0.0",
       "files": [
@@ -3052,11 +3052,12 @@
       ]
     },
     "System.Collections.NonGeneric/4.3.0": {
-      "sha512": "LE/oChpRvkSi3U25u0KnJcI44JeDZ1QJCyN4qFDx2uusEypdqR24w7lKYw21eYe5esuCBuc862wRmpF63Yy1KQ==",
+      "sha512": "/D3jtX0+u5+6rS3RGvTMyICPpIuzBgqtUYLjK1aXLua0nWH4JpM1H/tRk1Uxs6Fo0fe22jyJaTpoXPSu0il8Ug==",
       "type": "package",
       "path": "system.collections.nongeneric/4.3.0",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -5887,7 +5888,7 @@
       ]
     },
     "System.Xml.XmlDocument/4.3.0": {
-      "sha512": "lJ8AxvkX7GQxpC6GFCeBj8ThYVyQczx2+f/cWHJU8tjS7YfI6Cv6bon70jVEgs2CiFbmmM8b9j1oZVx0dSI2Ww==",
+      "sha512": "xsnq6w3/S+NeYkUtxoCEDAn2Z+AkgvGLvJnslrTRte4jEU+fkR3DVG+s0sBmQYQ4c3r8949PaGg8AnRb9bBc2w==",
       "type": "package",
       "path": "system.xml.xmldocument/4.3.0",
       "files": [
@@ -5996,7 +5997,7 @@
       ]
     },
     "System.Xml.XPath/4.3.0": {
-      "sha512": "v1JQ5SETnQusqmS3RwStF7vwQ3L02imIzl++sewmt23VGygix04pEH+FCj1yWb+z4GDzKiljr1W7Wfvrx0YwgA==",
+      "sha512": "8Eo7vuasWRqXfiBRCIKz20Rq1h6n+NMp6nW2RmyUwF4VDekg8xbRZu8S3N21P5XGAhv+kaqUwI3xydEkcw+D5w==",
       "type": "package",
       "path": "system.xml.xpath/4.3.0",
       "files": [
@@ -6096,26 +6097,26 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\12132\\.nuget\\packages\\": {},
-    "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Users\\d00605132\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Study\\GitHub\\UnityWebSocketDemo\\server\\src\\Fleck.Tests\\Fleck.Tests.csproj",
+      "projectUniqueName": "D:\\Study\\github\\UnityWebSocketDemo\\server\\src\\Fleck.Tests\\Fleck.Tests.csproj",
       "projectName": "Fleck.Tests",
-      "projectPath": "D:\\Study\\GitHub\\UnityWebSocketDemo\\server\\src\\Fleck.Tests\\Fleck.Tests.csproj",
-      "packagesPath": "C:\\Users\\12132\\.nuget\\packages\\",
-      "outputPath": "D:\\Study\\GitHub\\UnityWebSocketDemo\\server\\src\\Fleck.Tests\\obj\\",
+      "projectPath": "D:\\Study\\github\\UnityWebSocketDemo\\server\\src\\Fleck.Tests\\Fleck.Tests.csproj",
+      "packagesPath": "C:\\Users\\d00605132\\.nuget\\packages\\",
+      "outputPath": "D:\\Study\\github\\UnityWebSocketDemo\\server\\src\\Fleck.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "fallbackFolders": [
-        "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\12132\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\d00605132\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -6130,15 +6131,15 @@
       "frameworks": {
         "netcoreapp2.0": {
           "projectReferences": {
-            "D:\\Study\\GitHub\\UnityWebSocketDemo\\server\\src\\Fleck\\Fleck.csproj": {
-              "projectPath": "D:\\Study\\GitHub\\UnityWebSocketDemo\\server\\src\\Fleck\\Fleck.csproj"
+            "D:\\Study\\github\\UnityWebSocketDemo\\server\\src\\Fleck\\Fleck.csproj": {
+              "projectPath": "D:\\Study\\github\\UnityWebSocketDemo\\server\\src\\Fleck\\Fleck.csproj"
             }
           }
         },
         "net45": {
           "projectReferences": {
-            "D:\\Study\\GitHub\\UnityWebSocketDemo\\server\\src\\Fleck\\Fleck.csproj": {
-              "projectPath": "D:\\Study\\GitHub\\UnityWebSocketDemo\\server\\src\\Fleck\\Fleck.csproj"
+            "D:\\Study\\github\\UnityWebSocketDemo\\server\\src\\Fleck\\Fleck.csproj": {
+              "projectPath": "D:\\Study\\github\\UnityWebSocketDemo\\server\\src\\Fleck\\Fleck.csproj"
             }
           }
         }

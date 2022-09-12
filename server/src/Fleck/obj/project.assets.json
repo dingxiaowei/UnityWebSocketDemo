@@ -551,7 +551,7 @@
       ]
     },
     "Microsoft.NETCore.Platforms/1.1.0": {
-      "sha512": "kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
+      "sha512": "bLpT1f/SFlO1CzqXG12KnJzpZs6lv24uX2Rzi4Fmm0noJpNlnWRVryuO3yK18Ca04t/YHcO1e1Z0WDfjseqNzw==",
       "type": "package",
       "path": "microsoft.netcore.platforms/1.1.0",
       "files": [
@@ -566,7 +566,7 @@
       ]
     },
     "Microsoft.NETCore.Platforms/2.0.0": {
-      "sha512": "VdLJOCXhZaEMY7Hm2GKiULmn7IEPFE4XC5LPSfBVCUIA8YLZVh846gtfBJalsPQF2PlzdD7ecX7DZEulJ402ZQ==",
+      "sha512": "5BdAWDgMNwf90L0J+C/eh6kfHDa37ViL1cBL1nv5zPA4TB2cGV51YiQyvzCEy9DBE0LwwMI4+PkUpIekKyocSA==",
       "type": "package",
       "path": "microsoft.netcore.platforms/2.0.0",
       "files": [
@@ -852,26 +852,26 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\12132\\.nuget\\packages\\": {},
-    "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Users\\d00605132\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "0.0.0.1-local",
     "restore": {
-      "projectUniqueName": "D:\\Study\\GitHub\\UnityWebSocketDemo\\server\\src\\Fleck\\Fleck.csproj",
+      "projectUniqueName": "D:\\Study\\github\\UnityWebSocketDemo\\server\\src\\Fleck\\Fleck.csproj",
       "projectName": "Fleck",
-      "projectPath": "D:\\Study\\GitHub\\UnityWebSocketDemo\\server\\src\\Fleck\\Fleck.csproj",
-      "packagesPath": "C:\\Users\\12132\\.nuget\\packages\\",
-      "outputPath": "D:\\Study\\GitHub\\UnityWebSocketDemo\\server\\src\\Fleck\\obj\\",
+      "projectPath": "D:\\Study\\github\\UnityWebSocketDemo\\server\\src\\Fleck\\Fleck.csproj",
+      "packagesPath": "C:\\Users\\d00605132\\.nuget\\packages\\",
+      "outputPath": "D:\\Study\\github\\UnityWebSocketDemo\\server\\src\\Fleck\\obj\\",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "fallbackFolders": [
-        "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\12132\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\d00605132\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

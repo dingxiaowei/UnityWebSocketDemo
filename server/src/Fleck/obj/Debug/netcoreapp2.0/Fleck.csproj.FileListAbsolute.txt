@@ -19,9 +19,9 @@ D:\Work\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\netcoreapp2.0\Fleck
 D:\Study\GitHub\UnityWebSocketDemo\server\src\Fleck\bin\Debug\netcoreapp2.0\Fleck.deps.json
 D:\Study\GitHub\UnityWebSocketDemo\server\src\Fleck\bin\Debug\netcoreapp2.0\Fleck.dll
 D:\Study\GitHub\UnityWebSocketDemo\server\src\Fleck\bin\Debug\netcoreapp2.0\Fleck.pdb
-D:\Study\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\netcoreapp2.0\Fleck.csprojAssemblyReference.cache
 D:\Study\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\netcoreapp2.0\Fleck.csproj.CoreCompileInputs.cache
 D:\Study\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\netcoreapp2.0\Fleck.AssemblyInfoInputs.cache
 D:\Study\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\netcoreapp2.0\Fleck.AssemblyInfo.cs
 D:\Study\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\netcoreapp2.0\Fleck.dll
 D:\Study\GitHub\UnityWebSocketDemo\server\src\Fleck\obj\Debug\netcoreapp2.0\Fleck.pdb
+D:\Study\github\UnityWebSocketDemo\server\src\Fleck\obj\Debug\netcoreapp2.0\Fleck.csprojAssemblyReference.cache
