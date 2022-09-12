@@ -17,6 +17,19 @@ message S2C_EnterMap // IResponse
 	repeated UnitInfo Units = 2;
 }
 
+message C2S_SendVoice //IRequest
+{
+	int32 RpcId = 90;
+}
+
+message S2C_ReceiveVoice //IResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+	byte[] Voice = 93;
+}
+
 message UnitInfo
 {
 	int64 UnitId  = 1;

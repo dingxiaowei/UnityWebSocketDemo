@@ -100,6 +100,8 @@
     <Compile Include="Assets\UnityWebSocket\Scripts\WebSocket\AutoRegister\PacketParser.cs" />
     <Compile Include="Assets\UnityWebSocket\Scripts\WebSocket\ProtobufHelper.cs" />
     <Compile Include="Assets\UnityWebSocket\Scripts\WebSocket\AutoRegister\HeartBeat\S2C_HeartBeatHandler.cs" />
+    <Compile Include="Assets\Scripts\WaveUtility.cs" />
+    <Compile Include="Assets\Scripts\TestMicro.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
