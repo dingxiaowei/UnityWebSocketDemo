@@ -53,7 +53,9 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+*.csproj
 
 # Crashlytics generated file
 crashlytics-build.properties
 
+/ProjectSettings/XRSettings.asset
